@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server/server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "migrate": "node migration/your-migration-file.js"
+    "migrate": "node migration/your_migration_script.js"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -18,7 +18,7 @@
     "nodemailer": "^6.7.5",
     "html-pdf-node": "^1.0.8",
     "stripe": "^8.174.0",
-    "json2csv": "^6.0.0",
+    "json2csv": "^5.0.6",
     "ws": "^8.2.3"
   },
   "engines": {
