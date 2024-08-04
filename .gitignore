@@ -32,3 +32,4 @@ client/build/
 client/node_modules/puppeteer/.local-chromium/
 .env
 *.log
+Banatcom.git/
