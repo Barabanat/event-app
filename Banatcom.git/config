@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/Barabanat/Banatcom.git
+	fetch = +refs/*:refs/*
+	mirror = true
+[remote "heroku"]
+	url = https://git.heroku.com/banatcom-event-app.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*
