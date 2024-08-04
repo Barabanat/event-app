@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server/server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "migrate": "node migration/migrate-config.js"
+    "migrate": "node server/migration/migrate-config.js"
   },
   "dependencies": {
     "express": "^4.19.2",
