@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 dotenv.config();
 
@@ -17,14 +18,12 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
 });
-
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -172,8 +171,6 @@ const sendOrderConfirmationEmail = async (order, eventDetails) => {
 
   await transporter.sendMail(mailOptions);
 };
-
-
 
 const sendWelcomeEmail = async (email, username) => {
   const mailOptions = {
@@ -601,7 +598,6 @@ app.post('/api/orders', verifyToken, async (req, res) => {
   }
 });
 
-
 // Route for fetching the admin's events
 app.get('/api/admin/events', verifyToken, verifyAdminEvent, async (req, res) => {
   try {
@@ -986,14 +982,11 @@ app.get('/api/orders/:orderNumber/download', verifyToken, verifyAdminEvent, asyn
   }
 });
 
-const path = require('path');
-
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
-
 
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
