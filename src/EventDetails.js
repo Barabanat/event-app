@@ -63,8 +63,10 @@ const EventDetails = () => {
           className="w-full h-96 object-cover object-center"
         />
         <div className="p-6">
-          <h1 className="text-4xl font-bold text-[#073B4C] mb-2">{event.title}</h1>
-          <p className="text-3xl font-bold text-[#073B4C] mb-6">${(event.price / 100).toFixed(2)}</p>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-4xl font-bold text-[#073B4C]">{event.title}</h1>
+            <p className="text-3xl font-bold text-[#073B4C]">${(event.price / 100).toFixed(2)}</p>
+          </div>
           <div className="flex items-center text-gray-600 mb-4">
             <MdEvent className="h-6 w-6 mr-2" />
             <span>{formatDate(event.date)}</span>

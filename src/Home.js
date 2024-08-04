@@ -28,7 +28,7 @@ const Home = () => {
 
     fetchEvents();
 
-    const ws = new WebSocket('wss://banatcom-event-app.herokuapp.com');
+    const ws = new WebSocket('ws://localhost:3001');
 
     ws.onmessage = (message) => {
       const newEvent = JSON.parse(message.data);

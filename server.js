@@ -9,20 +9,20 @@ const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-const path = require('path');
 
 dotenv.config();
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001; // Ensure a different port from the frontend
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 app.use(cors());
@@ -171,6 +171,8 @@ const sendOrderConfirmationEmail = async (order, eventDetails) => {
 
   await transporter.sendMail(mailOptions);
 };
+
+
 
 const sendWelcomeEmail = async (email, username) => {
   const mailOptions = {
@@ -598,6 +600,7 @@ app.post('/api/orders', verifyToken, async (req, res) => {
   }
 });
 
+
 // Route for fetching the admin's events
 app.get('/api/admin/events', verifyToken, verifyAdminEvent, async (req, res) => {
   try {
@@ -980,12 +983,6 @@ app.get('/api/orders/:orderNumber/download', verifyToken, verifyAdminEvent, asyn
     console.error('Error fetching order:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
-
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 const server = app.listen(PORT, () => {

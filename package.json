@@ -26,7 +26,6 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "lucide-react": "^0.417.0",
-    "node-pg-migrate": "^7.6.0",
     "nodemailer": "^6.9.14",
     "pdfjs-dist": "^4.5.136",
     "pg": "^8.12.0",
@@ -43,11 +42,11 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "react-scripts start",
+    "start-backend": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

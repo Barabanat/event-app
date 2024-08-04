@@ -39,7 +39,7 @@ const AdminPage = () => {
           setError('No token found');
           return;
         }
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/events`, {
+        const response = await axios.get('/api/admin/events', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,7 +68,7 @@ const AdminPage = () => {
           setError('No token found');
           return;
         }
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders`, {
+        const response = await axios.get('/api/orders', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -88,7 +88,7 @@ const AdminPage = () => {
           setError('No token found');
           return;
         }
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/events`, {
+        const response = await axios.get('/api/events', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -105,7 +105,7 @@ const AdminPage = () => {
     fetchOrders();
     fetchEvents();
 
-    const ws = new WebSocket('wss://banatcom-event-app.herokuapp.com');
+    const ws = new WebSocket('ws://localhost:3001');
     ws.onopen = () => {
       console.log('WebSocket connection established');
     };
@@ -172,7 +172,7 @@ const AdminPage = () => {
         return;
       }
 
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/orders`, {
+      const response = await axios.post('/api/admin/orders', {
         ...newOrder,
         eventId: adminEventIds[0], // Assuming adminEventIds is an array and taking the first event ID
       }, {
@@ -255,7 +255,7 @@ const AdminPage = () => {
         setError('No token found');
         return;
       }
-      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/orders`, {
+      await axios.delete('/api/orders', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -274,7 +274,7 @@ const AdminPage = () => {
         setError('No token found');
         return;
       }
-      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/orders/${orderId}`, {
+      await axios.delete(`/api/orders/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -327,7 +327,7 @@ const AdminPage = () => {
         return;
       }
 
-      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/events/${selectedEvent.id}`, {
+      await axios.put(`/api/events/${selectedEvent.id}`, {
         description: selectedEvent.description
       }, {
         headers: {

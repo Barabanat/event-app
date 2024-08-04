@@ -11,15 +11,12 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Logging in with:', { username, password });
-
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/login`, { username, password });
-      console.log('Login response:', response.data);
+      const response = await axios.post('/api/admin/login', { username, password });
       localStorage.setItem('adminToken', response.data.token);
       navigate('/admin/dashboard');
     } catch (error) {
-      console.error('Error logging in:', error.response ? error.response.data : error.message);
+      console.error('Error logging in:', error);
       setError('Invalid credentials');
     }
   };

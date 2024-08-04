@@ -19,7 +19,7 @@ const Checkout = () => {
     email: '',
     confirmEmail: '',
     phoneNumber: '',
-    tShirtSize: 'Small',
+    tShirtSize: 'Small', // Set a default value
   });
   const [total, setTotal] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,11 +71,11 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!stripe || !elements) {
       return;
     }
-
+  
     // Form validation
     if (
       !formData.firstName ||
@@ -91,10 +91,14 @@ const Checkout = () => {
       }
       return;
     }
-
+  
     setIsSubmitting(true);
-
+  
     try {
+      // Debugging: Log event and total
+      console.log('Event ID:', event.id);
+      console.log('Total Amount:', total);
+  
       const paymentIntentResponse = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: {
@@ -102,16 +106,16 @@ const Checkout = () => {
         },
         body: JSON.stringify({ amount: total, eventId: event.id }),
       });
-
+  
       if (!paymentIntentResponse.ok) {
         const errorData = await paymentIntentResponse.json();
         throw new Error(errorData.message || 'Failed to create payment intent');
       }
-
+  
       const paymentIntent = await paymentIntentResponse.json();
-
+  
       const cardElement = elements.getElement(CardElement);
-
+  
       const { error, paymentIntent: confirmedPaymentIntent } = await stripe.confirmCardPayment(paymentIntent.client_secret, {
         payment_method: {
           card: cardElement,
@@ -122,7 +126,7 @@ const Checkout = () => {
           },
         },
       });
-
+  
       if (error) {
         setErrorMessage(error.message || 'An unknown error occurred');
       } else {
@@ -132,12 +136,12 @@ const Checkout = () => {
           total,
           formData,
         };
-
+  
         const token = localStorage.getItem('userToken');
         if (!token) {
           throw new Error('No token found. Please log in again.');
         }
-
+  
         // Save order to backend
         const saveOrderResponse = await fetch('/api/orders', {
           method: 'POST',
@@ -147,12 +151,12 @@ const Checkout = () => {
           },
           body: JSON.stringify(order),
         });
-
+  
         if (!saveOrderResponse.ok) {
           const errorData = await saveOrderResponse.json();
           throw new Error(errorData.message || 'Failed to save order');
         }
-
+  
         navigate('/confirmation', { state: { order } });
         setErrorMessage('');
       }
@@ -162,6 +166,8 @@ const Checkout = () => {
       setIsSubmitting(false);
     }
   };
+  
+  
 
   const formatDate = (dateString) => {
     const options = { month: 'long', day: 'numeric', year: 'numeric' };

@@ -18,14 +18,9 @@ import LegalTerms from './LegalTerms';
 import PrivacyPolicy from './PrivacyPolicy';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import Modal from './Modal';
-import axios from 'axios';
+import Modal from './Modal'; // Import the Modal component
 
-// Load Stripe with public key
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-
-// Set axios base URL
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,6 +54,7 @@ function App() {
           </Elements>
         </main>
         <Footer />
+        {/* You can conditionally render the modal or call toggleModal from somewhere else */}
         <Modal isOpen={isModalOpen} onClose={toggleModal}>
           <div className="p-4">
             <p>This is a modal content with sufficient margins.</p>
