@@ -34,3 +34,5 @@ client/node_modules/puppeteer/.local-chromium/
 *.log
 Banatcom.git/
 Banatcom.git/
+node_modules/
+client/node_modules/
