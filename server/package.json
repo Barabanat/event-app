@@ -16,7 +16,10 @@
     "nodemailer": "^6.7.5",
     "html-pdf-node": "^1.0.8",
     "stripe": "^8.174.0",
-    "json2csv": "^6.0.0",
+    "json2csv": "^5.0.7",
     "ws": "^8.2.3"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
